@@ -10,7 +10,7 @@ from pymongo.server_api import ServerApi
 
 app = FastAPI()
 
-OPENAI_API_KEY = "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"
+OPENAI_API_KEY = "sk-[REDACTED_BY_KEYGUARDIAN]0ZKisAAc"
 PINECONE_API_KEY = "f7668e4e-8594-4e11-8850-b272faf7d492"
 PINECONE_ENV = "us-west4-gcp"
 co = cohere.Client("GP6aGX4AlXzTE6wru1cSWqXbcCegq3Ey8L45Ls78")
