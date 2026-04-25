@@ -1,105 +1,142 @@
-# FastAPI Endpoint Kwan  
+# FastKwan
 
-## Overview  
+A FastAPI-based service for Traditional Chinese Medicine (TCM) syndrome differentiation, lifestyle recommendations, and prescription suggestions using AI and vector search.
 
-**FastAPI Endpoint Kwan** is a Python-based project designed to demonstrate the implementation of RESTful APIs using the FastAPI framework. Known for its high performance and ease of use, FastAPI provides an excellent foundation for building robust and scalable web APIs.  
+## Overview
 
----
+**FastKwan** is a Python-based API service that combines AI models with vector search to assist with Traditional Chinese Medicine diagnostics. It provides endpoints for:
 
-## ✨ Features  
+- **Syndrome Differentiation**: Analyzes patient symptoms to identify TCM syndromes
+- **Lifestyle Recommendations**: Retrieves prevention and lifestyle advice for diseases
+- **Prescription Suggestions**: Suggests relevant prescriptions based on symptoms
 
-- **FastAPI Framework**:  
-  Utilizes FastAPI for creating high-performance, production-ready APIs with minimal code.  
+## Features
 
-- **Asynchronous Support**:  
-  Leverages Python's async capabilities for efficient request handling.  
+- **AI-Powered NER**: Uses GPT-3.5-turbo to extract symptoms from patient descriptions
+- **Vector Search**: Leverages Pinecone for semantic similarity search across TCM knowledge bases
+- **Intelligent Reranking**: Uses Cohere reranking to improve result relevance
+- **MongoDB Integration**: Stores and retrieves disease information and lifestyle recommendations
+- **Interactive Documentation**: Auto-generated API docs via Swagger UI and ReDoc
 
-- **Extensible Design**:  
-  Built with scalability and extensibility in mind, making it easy to add new endpoints and features.  
+## Technology Stack
 
-- **Validation and Typing**:  
-  Implements data validation and type hints for better error handling and developer experience.  
+- **Framework**: FastAPI 0.115+
+- **AI/ML**: OpenAI GPT-3.5, Cohere Rerank, LangChain
+- **Vector Database**: Pinecone
+- **Database**: MongoDB Atlas
+- **Server**: Uvicorn
 
-- **Interactive API Documentation**:  
-  Automatically generated API docs available through Swagger UI and ReDoc.  
+## Prerequisites
 
----
+- Python 3.10 or higher
+- pip package manager
+- API keys for: OpenAI, Pinecone, Cohere, MongoDB Atlas
 
-## 🛠️ Technology Stack  
+## Installation
 
-- **Framework**: FastAPI  
-- **Programming Language**: Python  
-- **Documentation**: Swagger UI / ReDoc  
-- **Dependencies**:  
-  - `pydantic`: For data validation and settings management.  
-  - `uvicorn`: ASGI server for running the FastAPI app.  
+1. Clone the repository:
 
----
+   ```bash
+   git clone https://github.com/kneeraazon404/fastkwan.git
+   cd fastkwan
+   ```
 
-## 🚀 Getting Started  
+2. Set up a virtual environment:
 
-### Prerequisites  
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   ```
 
-Ensure the following are installed on your system:  
-- **Python**: Version 3.8 or above  
-- **pip**: Python package manager  
+3. Install dependencies:
 
-### Installation  
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-1. Clone the repository:  
-   ```bash  
-   git clone https://github.com/kneeraazon404/fastapiendpoint-kwan.git  
-   cd fastapiendpoint-kwan  
-   ```  
+4. Configure environment variables:
 
-2. Set up a virtual environment:  
-   ```bash  
-   python -m venv venv  
-   source venv/bin/activate  # On Windows: venv\Scripts\activate  
-   ```  
+   ```bash
+   cp .env.example .env
+   # Edit .env with your API keys
+   ```
 
-3. Install dependencies:  
-   ```bash  
-   pip install -r requirements.txt  
-   ```  
+## Environment Variables
 
----
+Create a `.env` file with the following variables:
 
-## ⚙️ Usage  
+```env
+OPENAI_API_KEY=your_openai_api_key
+PINECONE_API_KEY=your_pinecone_api_key
+COHERE_API_KEY=your_cohere_api_key
+MONGODB_URI=your_mongodb_connection_string
+PINECONE_INDEX_NAME=evidgpt  # optional, defaults to "evidgpt"
+```
 
-1. Start the FastAPI application:  
-   ```bash  
-   uvicorn main:app --reload  
-   ```  
+## Usage
 
-2. Access the application at:  
-   - Swagger UI: `http://127.0.0.1:8000/docs`  
-   - ReDoc: `http://127.0.0.1:8000/redoc`  
+1. Start the FastAPI application:
 
-3. Test available endpoints using the interactive documentation or any API client (e.g., Postman).  
+   ```bash
+   uvicorn main:app --reload
+   ```
 
----
+2. Access the API documentation:
+   - Swagger UI: `http://127.0.0.1:8000/docs`
+   - ReDoc: `http://127.0.0.1:8000/redoc`
 
-## 📜 License  
+3. Test endpoints:
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.  
+   **Health Check:**
 
----
+   ```bash
+   curl http://localhost:8000/health
+   ```
 
-## 🤝 Contributions  
+   **Syndrome Differentiation:**
 
-Contributions are welcome! To contribute:  
+   ```bash
+   curl -X POST "http://localhost:8000/syndrome" \
+     -H "Content-Type: application/json" \
+     -d '{"query": "患者咳嗽，喉咙痛，有痰，鼻塞"}'
+   ```
 
-1. Fork the repository.  
-2. Create a new branch:  
-   ```bash  
-   git checkout -b feature-name  
-   ```  
-3. Commit your changes:  
-   ```bash  
-   git commit -m "Add feature-name"  
-   ```  
-4. Push to your fork:  
-   ```bash  
-   git push origin feature-name  
-   ```  
+   **Lifestyle Recommendations:**
+
+   ```bash
+   curl -X POST "http://localhost:8000/lifestyle" \
+     -H "Content-Type: application/json" \
+     -d '{"query": "感冒"}'
+   ```
+
+   **Prescription Suggestions:**
+
+   ```bash
+   curl -X POST "http://localhost:8000/prescription" \
+     -H "Content-Type: application/json" \
+     -d '{"query": "患者咳嗽，喉咙痛，有痰"}'
+   ```
+
+## API Endpoints
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/` | GET | API info and health check |
+| `/health` | GET | Health check endpoint |
+| `/syndrome` | POST | Perform TCM syndrome differentiation |
+| `/lifestyle` | POST | Get lifestyle/prevention recommendations |
+| `/prescription` | POST | Get prescription suggestions |
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+## Contributing
+
+Contributions are welcome!
+
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feature-name`
+3. Commit changes: `git commit -m "Add feature-name"`
+4. Push to your fork: `git push origin feature-name`
+5. Open a pull request
