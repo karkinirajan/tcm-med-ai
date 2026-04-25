@@ -1,26 +1,12 @@
-# FastAPI and server
-fastapi>=0.115.0
-uvicorn>=0.34.0
-
-# AI/ML
-openai>=1.0.0
-cohere>=5.0.0
-langchain>=0.3.0
-langchain-openai>=0.3.0
-langchain-pinecone>=0.2.0
-
-# Vector database
-pinecone>=5.0.0
-
-# Database
-pymongo>=4.10.0
-
-# Environment
-python-dotenv>=1.0.0
-
-# Data validation
-pydantic>=2.10.0
-
-# Utilities
-requests>=2.32.0
-PyYAML>=6.0.2
+certifi==2026.4.22
+charset-normalizer==3.4.7
+idna==3.13
+orjson==3.11.8
+pinecone==8.1.2
+pinecone-plugin-assistant==3.0.3
+pinecone-plugin-interface==0.0.7
+python-dateutil==2.9.0.post0
+requests==2.33.1
+six==1.17.0
+typing_extensions==4.15.0
+urllib3==2.6.3
